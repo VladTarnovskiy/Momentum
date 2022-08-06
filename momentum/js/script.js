@@ -149,6 +149,44 @@ buttonChangeQuote.addEventListener('click', () => {
     getQuote()
 })
 
+//Audioplayer
+import playList from './playList.js'
+const play = document.querySelector('.play')
+const butNextAudio = document.querySelector('.play-next')
+const butPrevAudio = document.querySelector('.play-prev')
+let isPlay = false
+let playNum = 0
+const audio = new Audio();
+
+function playAudio () {
+    audio.src = playList[playNum].src
+    audio.currentTime = 0;
+    if (isPlay == false){
+        play.classList.toggle('pause')
+        isPlay = true
+        audio.play()
+    } else {
+        play.classList.toggle('pause')
+        isPlay = false
+        audio.pause();
+    }
+}
+play.addEventListener('click', playAudio)
+
+function playNext (){
+    playNum += 1
+    playAudio()
+}
+butNextAudio.addEventListener('click', playNext)
+
+function playPrev (){
+    playNum -= 1
+    playAudio()
+}
+butPrevAudio.addEventListener('click', playPrev)
+
+
+
 //Local Storage
 const name = document.querySelector('.name')
 
