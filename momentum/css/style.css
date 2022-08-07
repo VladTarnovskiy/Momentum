@@ -120,6 +120,24 @@ body {
   background-image: url("../assets/svg/play-next.svg");
 }
 
+.header_lang {
+  font-size: 20px;
+  line-height: 50px;
+  text-decoration: none;
+  color: white;
+  font-style: normal;
+  font-weight: 400;
+  padding-right: 11px;
+  padding-left: 10px;
+  opacity: 0.8;
+  transition: 0.3s;
+}
+
+.header_lang:hover,
+.active{
+  opacity: 1;
+}
+
 .weather {
   display: flex;
   flex-direction: column;
