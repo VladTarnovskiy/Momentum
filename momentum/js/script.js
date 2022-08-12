@@ -32,7 +32,8 @@ const greetingTranslation = {
         'localDate': 'en-US',
         'wind speed': 'Wind speed: ',
         'humidity': 'Humidity: ',
-        'm/s': ' m/s'
+        'm/s': ' m/s',
+        'title-api':'Background source:'
     },
     'ru': {
         'morning': 'Доброе утро',
@@ -43,12 +44,14 @@ const greetingTranslation = {
         'localDate': 'ru-RU',
         'wind speed': 'Скорость ветра: ',
         'humidity': 'Влажность: ',
-        'm/s': ' м/с'
+        'm/s': ' м/с',
+        'title-api':'Источник фоновых изображений:'
     }
 }
 
 const greeting = document.querySelector('.greeting')
 const name = document.querySelector('.name')
+const titleAPI = document.querySelector('.title-api')
 
 function getTimeOfDay () {
     const date = new Date()
@@ -71,6 +74,7 @@ function getTimeOfDay () {
 function showGreeting(lang = 'en') {
     greeting.textContent = greetingTranslation[lang][getTimeOfDay()]
     name.placeholder = greetingTranslation[lang]['placeholder']
+    titleAPI.textContent = greetingTranslation[lang]['title-api']
 
     if (lang == 'ru'){
         russian.classList.add('active');
@@ -87,23 +91,65 @@ const body = document.querySelector('body')
 const slidePrev = document.querySelector('.slide-prev')
 const slideNext = document.querySelector('.slide-next')
 let randomNum = getRandomNum(19) + 1
+let currentApi = 0
 
 function getRandomNum (max) {
    return Math.floor(Math.random() * max)
 }
 
-function setBg () {
+//Github
+function getLinkToImagegithub () {
     let bgNum = randomNum.toString().padStart(2, "0")
-    let timeOfDay = getTimeOfDay().toLowerCase()
-
     const img = new Image();
-    img.src = `https://raw.githubusercontent.com/VladTarnovskiy/stage1-tasks/assets/images/${timeOfDay}/${bgNum}.jpg`
+
+    img.src = `https://raw.githubusercontent.com/VladTarnovskiy/stage1-tasks/assets/images/${getTimeOfDay()}/${bgNum}.jpg`
     img.onload = () => {      
-        body.style.backgroundImage = `url('https://raw.githubusercontent.com/VladTarnovskiy/stage1-tasks/assets/images/${timeOfDay}/${bgNum}.jpg')`
+        body.style.backgroundImage = `url('https://raw.githubusercontent.com/VladTarnovskiy/stage1-tasks/assets/images/${getTimeOfDay()}/${bgNum}.jpg')`
   }; 
 }
 
-setBg()
+
+
+//Unsplash
+async function getLinkToImageUs () {
+        const url = `https://api.unsplash.com/photos/random?orientation=landscape&query=${getTimeOfDay()}&client_id=ECUiydZwXI6wEs2xJwIF59HG_jIZnTyOxFNErJhxnEc`
+    try {
+        const res = await fetch(url)
+        const data = await res.json()
+        const img = new Image();
+        img.src = data.urls.regular
+        img.onload = () => {      
+            body.style.backgroundImage = `url('${data.urls.regular}')`
+    }
+    } catch(err) {
+        alert("Unsplash huor's limit exeed! Try in one hour please!!")
+    }
+}
+
+//Flicker
+async function getLinkToImageFl () {
+    const url = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=c8d7ef4034e937f3fd469f94389fa00f&tags=${getTimeOfDay()}&extras=url_h&format=json&nojsoncallback=1`
+    const res = await fetch(url)
+    const data = await res.json()
+    const photosObject = await data.photos.photo
+    let getRandomNumForFc = getRandomNum(100)
+    const img = new Image();
+    img.src = `https://farm${photosObject[getRandomNumForFc].farm}.staticflickr.com/${photosObject[getRandomNumForFc].server}/${photosObject[getRandomNumForFc].id}_${photosObject[getRandomNumForFc].secret}.jpg`
+    img.onload = () => {      
+        body.style.backgroundImage = `url(https://farm${photosObject[getRandomNumForFc].farm}.staticflickr.com/${photosObject[getRandomNumForFc].server}/${photosObject[getRandomNumForFc].id}_${photosObject[getRandomNumForFc].secret}.jpg)`
+  }; 
+}
+
+function setBg (currentApi) {
+    localStorage.setItem('currentApi', currentApi)
+    if (currentApi == 0){
+        getLinkToImagegithub()
+    } else if (currentApi == 1) {
+        getLinkToImageUs()
+    } else {
+        getLinkToImageFl()
+    }
+}
 
 function getSlidePrev () {
     if (randomNum > 1){
@@ -112,10 +158,10 @@ function getSlidePrev () {
         randomNum = 20
     }
     
-    setBg()
+    setBg(currentApi)
 }
 
-slidePrev.addEventListener('click', getSlidePrev)
+
 
 function getSlideNext () {
     if (randomNum < 20){
@@ -124,10 +170,10 @@ function getSlideNext () {
         randomNum = 1
     }
 
-    setBg()
+    setBg(currentApi)
 }
 
-slideNext.addEventListener('click', getSlideNext)
+
 
 //Whether
 const weatherIcon = document.querySelector('.weather-icon')
@@ -276,6 +322,48 @@ playList.forEach((item, index) => {
     playerList.append(li)
 })
 
+//Settings
+const apiList = document.querySelectorAll('.api-item')
+const github = document.querySelector('.github')
+const unsplash = document.querySelector('.unsplash')
+const flickr = document.querySelector('.flickr')
+
+function changeApiMarker (currentApi = 0) {
+    apiList.forEach((item, index) => {
+        if (currentApi == index){
+            item.classList.add('active')
+        } else {
+            item.classList.remove('active')
+        }
+    })
+}
+
+changeApiMarker()
+
+github.addEventListener('click', () => {
+    currentApi = 0
+    changeApiMarker (currentApi)
+    setBg(currentApi)
+})
+
+unsplash.addEventListener('click', () => {
+    currentApi = 1
+    changeApiMarker (currentApi)
+    setBg(currentApi)
+})
+
+flickr.addEventListener('click', () => {
+    currentApi = 2
+    changeApiMarker (currentApi)
+    setBg(currentApi)
+})  
+
+slidePrev.addEventListener('click', getSlidePrev)
+slideNext.addEventListener('click', getSlideNext)
+
+
+
+
 //Local Storage
 function setLocalStorage() {
     localStorage.setItem('name', name.value);
@@ -286,6 +374,7 @@ window.addEventListener('beforeunload', setLocalStorage)
 
 function getLocalStorage() {
     let lang = localStorage.getItem('lang')
+    let api = localStorage.getItem('currentApi')
 
     if(localStorage.getItem('name')) {
         name.value = localStorage.getItem('name');
@@ -295,11 +384,18 @@ function getLocalStorage() {
         city.value = localStorage.getItem('city');
     }
 
+    if(localStorage.getItem('currentApi')) {
+        currentApi = localStorage.getItem('currentApi');
+    }
+
     showGreeting(lang);
     getWeather(lang)
     showDate(lang)
     getQuote(lang)
     quoteTranslate(lang)
+    setBg(api)
+    changeApiMarker(api)
 }
 
 window.addEventListener('load', getLocalStorage)
+
