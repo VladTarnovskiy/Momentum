@@ -7,6 +7,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  transition: all 1s ease-in-out;
 }
 
 body {
@@ -125,11 +126,63 @@ body {
   position: absolute;
   left:50%;
   transform:translate(-50%, 0);
+  top:-500px;
   width: 300px;
   height: 500px;
   background-color: black;
   opacity: 0.9;
   z-index: 5;
+  transition: all 1s ease-in-out;
+}
+
+.setting.center{
+  top: 0;
+}
+
+.closer{
+  display: flex;
+  justify-content: end;
+}
+
+.closer-svg{
+  display: block;
+  width: 32px;
+  height: 32px;
+  background-position: center;
+  background-size: 30px 30px;
+  background-image: url(../assets/svg/closer.svg);
+  background-repeat: no-repeat;
+  text-align: end;
+  background-color: black;
+  cursor: pointer;
+  margin-top: 5px;
+  margin-right: 5px;
+  opacity: 0.8;
+}
+
+.setting-svg-wrap{
+  left:50%;
+  transform:translate(-50%, 0);
+  top:10px;
+  display: block;
+  position: fixed;
+  width: 32px;
+  height: 32px;
+  background-position: center;
+  background-size: 30px 30px;
+  background-image: url(../assets/svg/setting.svg);
+  background-repeat: no-repeat;
+  text-align: end;
+  background-color: rgba(0, 0, 0, 0);
+  cursor: pointer;
+  margin-top: 5px;
+  margin-right: 5px;
+  opacity: 0.8;
+}
+
+.closer-svg:hover,
+.setting-svg-wrap:hover{
+  opacity: 1;
 }
 
 .header_lang{
@@ -156,7 +209,18 @@ body {
 }
 
 .title-api{
-  padding-bottom: 5px;
+  font-size: 20px;
+}
+
+.title-tag-api,
+.title-hide-element{
+  padding-top: 8px;
+  font-size: 20px;
+}
+
+.hide{
+  visibility: hidden;
+  opacity: 0;
 }
 
 .api-item{
@@ -166,9 +230,7 @@ body {
 }
 
 .api-item.active{
-  
   opacity: 1;
-  
 }
 
 
@@ -252,7 +314,8 @@ body {
   margin-bottom: 10px;
   font-family: 'Arial-MT';
   font-size: 100px;
-  letter-spacing: -4px;  
+  letter-spacing: -4px;
+  transition: all 1s ease-in-out;  
 }
 
 .date {

@@ -33,7 +33,9 @@ const greetingTranslation = {
         'wind speed': 'Wind speed: ',
         'humidity': 'Humidity: ',
         'm/s': ' m/s',
-        'title-api':'Background source:'
+        'title-api':'Background source:',
+        'Tag for API':'Tag for API:',
+        'Hide element':'Hide elements:'
     },
     'ru': {
         'morning': 'Доброе утро',
@@ -45,13 +47,17 @@ const greetingTranslation = {
         'wind speed': 'Скорость ветра: ',
         'humidity': 'Влажность: ',
         'm/s': ' м/с',
-        'title-api':'Источник фоновых изображений:'
+        'title-api':'Источник фоновых изображений:',
+        'Tag for API':'Тэги для поиска:',
+        'Hide element':'Скрыть элементы:'
     }
 }
 
 const greeting = document.querySelector('.greeting')
 const name = document.querySelector('.name')
 const titleAPI = document.querySelector('.title-api')
+const titleTagAPI = document.querySelector('.title-tag-api')
+const hideElement = document.querySelector('.title-hide-element')
 
 function getTimeOfDay () {
     const date = new Date()
@@ -75,6 +81,8 @@ function showGreeting(lang = 'en') {
     greeting.textContent = greetingTranslation[lang][getTimeOfDay()]
     name.placeholder = greetingTranslation[lang]['placeholder']
     titleAPI.textContent = greetingTranslation[lang]['title-api']
+    titleTagAPI.textContent = greetingTranslation[lang]['Tag for API']
+    hideElement.textContent = greetingTranslation[lang]['Hide element']
 
     if (lang == 'ru'){
         russian.classList.add('active');
@@ -92,6 +100,7 @@ const slidePrev = document.querySelector('.slide-prev')
 const slideNext = document.querySelector('.slide-next')
 let randomNum = getRandomNum(19) + 1
 let currentApi = 0
+let tag 
 
 function getRandomNum (max) {
    return Math.floor(Math.random() * max)
@@ -111,8 +120,8 @@ function getLinkToImagegithub () {
 
 
 //Unsplash
-async function getLinkToImageUs () {
-        const url = `https://api.unsplash.com/photos/random?orientation=landscape&query=${getTimeOfDay()}&client_id=ECUiydZwXI6wEs2xJwIF59HG_jIZnTyOxFNErJhxnEc`
+async function getLinkToImageUs (tag) {
+        const url = `https://api.unsplash.com/photos/random?orientation=landscape&query=${getTimeOfDay()}, ${tag}&client_id=ECUiydZwXI6wEs2xJwIF59HG_jIZnTyOxFNErJhxnEc`
     try {
         const res = await fetch(url)
         const data = await res.json()
@@ -124,11 +133,12 @@ async function getLinkToImageUs () {
     } catch(err) {
         alert("Unsplash huor's limit exeed! Try in one hour please!!")
     }
+    console.log(url)
 }
 
 //Flicker
-async function getLinkToImageFl () {
-    const url = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=c8d7ef4034e937f3fd469f94389fa00f&tags=${getTimeOfDay()}&extras=url_h&format=json&nojsoncallback=1`
+async function getLinkToImageFl (tag) {
+    const url = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=c8d7ef4034e937f3fd469f94389fa00f&tags=${getTimeOfDay()}, ${tag}&extras=url_h&format=json&nojsoncallback=1`
     const res = await fetch(url)
     const data = await res.json()
     const photosObject = await data.photos.photo
@@ -138,16 +148,17 @@ async function getLinkToImageFl () {
     img.onload = () => {      
         body.style.backgroundImage = `url(https://farm${photosObject[getRandomNumForFc].farm}.staticflickr.com/${photosObject[getRandomNumForFc].server}/${photosObject[getRandomNumForFc].id}_${photosObject[getRandomNumForFc].secret}.jpg)`
   }; 
+  console.log(url)
 }
 
-function setBg (currentApi) {
+function setBg (currentApi, tag) {
     localStorage.setItem('currentApi', currentApi)
     if (currentApi == 0){
         getLinkToImagegithub()
     } else if (currentApi == 1) {
-        getLinkToImageUs()
+        getLinkToImageUs(tag)
     } else {
-        getLinkToImageFl()
+        getLinkToImageFl(tag)
     }
 }
 
@@ -158,7 +169,7 @@ function getSlidePrev () {
         randomNum = 20
     }
     
-    setBg(currentApi)
+    setBg(currentApi, tag)
 }
 
 
@@ -170,7 +181,7 @@ function getSlideNext () {
         randomNum = 1
     }
 
-    setBg(currentApi)
+    setBg(currentApi, tag)
 }
 
 
@@ -323,10 +334,23 @@ playList.forEach((item, index) => {
 })
 
 //Settings
+const closer = document.querySelector('.closer-svg')
+const setting = document.querySelector('.setting')
+const settingSvg = document.querySelector('.setting-svg-wrap')
+
 const apiList = document.querySelectorAll('.api-item')
 const github = document.querySelector('.github')
 const unsplash = document.querySelector('.unsplash')
 const flickr = document.querySelector('.flickr')
+
+settingSvg.addEventListener('click', () => {
+    setting.classList.add('center')
+})
+
+closer.addEventListener('click', () => {
+    setting.classList.remove('center')
+})
+
 
 function changeApiMarker (currentApi = 0) {
     apiList.forEach((item, index) => {
@@ -360,8 +384,47 @@ flickr.addEventListener('click', () => {
 
 slidePrev.addEventListener('click', getSlidePrev)
 slideNext.addEventListener('click', getSlideNext)
+ 
+//API tag
+const tagAnimal = document.querySelector('#animal')
+const tagPeople = document.querySelector('#people')
+
+tagAnimal.addEventListener ('click', () => {
+    tag = tagAnimal.value
+    setBg(currentApi, tag)
+})
+
+tagPeople.addEventListener ('click', () => {
+    tag = tagPeople.value
+    setBg(currentApi, tag)
+})
+
+//Hide block
 
 
+
+const divTime = document.querySelector('.time')
+const divDate = document.querySelector('.date')
+const divGreeting = document.querySelector('.greeting-container')
+const divQuote = document.querySelector('.quote')
+const divWeather = document.querySelector('.weather')
+const divPlayer = document.querySelector('.player')
+
+const inputTime = document.querySelector('#time')
+const inputDate = document.querySelector('#date')
+const inputGreeting = document.querySelector('#greeting')
+const inputQuote = document.querySelector('#quote')
+const inputWeather = document.querySelector('#weather')
+const inputPlayer = document.querySelector('#audio')
+
+const blocks = [[inputTime, divTime], [inputDate, divDate], [inputGreeting, divGreeting], [inputQuote, divQuote], [inputWeather, divWeather], [inputPlayer, divPlayer]]
+
+blocks.forEach((item) => {
+    // localStorage.setItem('item', item[0].checked)
+    item[0].addEventListener ('change', () => {
+        item[1].classList.toggle('hide')
+    })
+})
 
 
 //Local Storage
@@ -387,6 +450,10 @@ function getLocalStorage() {
     if(localStorage.getItem('currentApi')) {
         currentApi = localStorage.getItem('currentApi');
     }
+
+    // JSON.parse(blocks.forEach((item) => {
+    //     item[0].localStorage.getItem('item')
+    // }))
 
     showGreeting(lang);
     getWeather(lang)
