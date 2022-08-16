@@ -24,6 +24,10 @@ body {
   transition: background-image 1s ease-in-out;
 }
 
+.setting input:hover{
+  cursor: pointer;
+}
+
 .header {
   display: flex;
   justify-content: space-between;

@@ -407,7 +407,7 @@ tagPeople.addEventListener ('click', () => {
 const divTime = document.querySelector('.time')
 const divDate = document.querySelector('.date')
 const divGreeting = document.querySelector('.greeting-container')
-const divQuote = document.querySelector('.quote')
+const divQuote = document.querySelector('.footer')
 const divWeather = document.querySelector('.weather')
 const divPlayer = document.querySelector('.player')
 
