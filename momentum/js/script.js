@@ -73,16 +73,15 @@ function getTimeOfDay () {
     } else if (0 <=hours && hours< 6) {
         timeOfDay = 'night'
     }
-
     return timeOfDay
 }
 
 function showGreeting(lang = 'en') {
-    greeting.textContent = greetingTranslation[lang][getTimeOfDay()]
-    name.placeholder = greetingTranslation[lang]['placeholder']
-    titleAPI.textContent = greetingTranslation[lang]['title-api']
-    titleTagAPI.textContent = greetingTranslation[lang]['Tag for API']
-    hideElement.textContent = greetingTranslation[lang]['Hide element']
+    greeting.textContent = greetingTranslation[lang][getTimeOfDay()];
+    name.placeholder = greetingTranslation[lang]['placeholder'];
+    titleAPI.textContent = greetingTranslation[lang]['title-api'];
+    titleTagAPI.textContent = greetingTranslation[lang]['Tag for API'];
+    hideElement.textContent = greetingTranslation[lang]['Hide element'];
 
     if (lang == 'ru'){
         russian.classList.add('active');
@@ -93,6 +92,8 @@ function showGreeting(lang = 'en') {
     }
       localStorage.setItem('lang', lang)
 }
+
+showGreeting()
 
 //Change background
 const body = document.querySelector('body')
@@ -117,7 +118,7 @@ function getLinkToImagegithub () {
   }; 
 }
 
-
+getLinkToImagegithub ()
 
 //Unsplash
 async function getLinkToImageUs (tag) {
@@ -401,8 +402,6 @@ tagPeople.addEventListener ('click', () => {
 
 //Hide block
 
-
-
 const divTime = document.querySelector('.time')
 const divDate = document.querySelector('.date')
 const divGreeting = document.querySelector('.greeting-container')
@@ -416,16 +415,21 @@ const inputGreeting = document.querySelector('#greeting')
 const inputQuote = document.querySelector('#quote')
 const inputWeather = document.querySelector('#weather')
 const inputPlayer = document.querySelector('#audio')
+const formHideElements = document.querySelector('.form-hide-elements').elements
 
 const blocks = [[inputTime, divTime], [inputDate, divDate], [inputGreeting, divGreeting], [inputQuote, divQuote], [inputWeather, divWeather], [inputPlayer, divPlayer]]
 
-blocks.forEach((item) => {
-    // localStorage.setItem('item', item[0].checked)
+blocks.forEach((item) => { 
     item[0].addEventListener ('change', () => {
         item[1].classList.toggle('hide')
     })
 })
 
+// for (let i = 0; i < formHideElements.length; i++){
+//     formHideElements[i].addEventListener('change', ()=>{
+//         localStorage.setItem(formHideElements[i].name, formHideElements[i].checked)
+//     })
+// }
 
 //Local Storage
 function setLocalStorage() {
@@ -451,11 +455,11 @@ function getLocalStorage() {
         currentApi = localStorage.getItem('currentApi');
     }
 
-    // JSON.parse(blocks.forEach((item) => {
-    //     item[0].localStorage.getItem('item')
-    // }))
+    // for (let i = 0; i < formHideElements.length; i++){
+    //     formHideElements[i].checked = localStorage.getItem(formHideElements[i].name) === 'true' ? true : false;
+    // }
 
-    showGreeting(lang);
+    showGreeting(lang)
     getWeather(lang)
     showDate(lang)
     getQuote(lang)
