@@ -240,7 +240,7 @@ const author = document.querySelector('.author')
 const buttonChangeQuote = document.querySelector('.change-quote')
 
 async function getQuote (lang = 'en') {
-    const url = `/js/${lang}data.json`
+    const url = `./js/${lang}data.json`
     const res = await fetch(url)
     const data = await res.json()
     const randomQuoteNumber = getRandomNum(data.length)
