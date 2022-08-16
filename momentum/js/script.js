@@ -93,8 +93,6 @@ function showGreeting(lang = 'en') {
       localStorage.setItem('lang', lang)
 }
 
-showGreeting()
-
 //Change background
 const body = document.querySelector('body')
 const slidePrev = document.querySelector('.slide-prev')
@@ -212,6 +210,8 @@ async function getWeather (lang = 'en') {
     }
 }
 
+getWeather()
+
 city.addEventListener('change', () => {
     getWeather()
 })
@@ -247,6 +247,8 @@ async function getQuote (lang = 'en') {
     quote.textContent = `${data[randomQuoteNumber].text}`;
     author.textContent = `${data[randomQuoteNumber].author}`;
 }
+
+getQuote ()
 
 function quoteTranslate (lang = 'en') {
     if(lang == 'en'){
@@ -455,15 +457,20 @@ function getLocalStorage() {
         currentApi = localStorage.getItem('currentApi');
     }
 
+    if(localStorage.getItem('lang')) {
+        showGreeting(lang)
+        getWeather(lang)
+        showDate(lang)
+        getQuote(lang)
+        quoteTranslate(lang)
+    } else {    
+        showGreeting()
+    }
     // for (let i = 0; i < formHideElements.length; i++){
     //     formHideElements[i].checked = localStorage.getItem(formHideElements[i].name) === 'true' ? true : false;
     // }
 
-    showGreeting(lang)
-    getWeather(lang)
-    showDate(lang)
-    getQuote(lang)
-    quoteTranslate(lang)
+   
     setBg(api)
     changeApiMarker(api)
 }
