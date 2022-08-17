@@ -410,6 +410,7 @@ const divGreeting = document.querySelector('.greeting-container')
 const divQuote = document.querySelector('.footer')
 const divWeather = document.querySelector('.weather')
 const divPlayer = document.querySelector('.player')
+const divTodo = document.querySelector('.call-todo')
 
 const inputTime = document.querySelector('#time')
 const inputDate = document.querySelector('#date')
@@ -417,21 +418,84 @@ const inputGreeting = document.querySelector('#greeting')
 const inputQuote = document.querySelector('#quote')
 const inputWeather = document.querySelector('#weather')
 const inputPlayer = document.querySelector('#audio')
+const inputTodo = document.querySelector('#todoDiv')
 const formHideElements = document.querySelector('.form-hide-elements').elements
 
-const blocks = [[inputTime, divTime], [inputDate, divDate], [inputGreeting, divGreeting], [inputQuote, divQuote], [inputWeather, divWeather], [inputPlayer, divPlayer]]
+const blocks = [[inputTime, divTime], [inputDate, divDate], [inputGreeting, divGreeting], [inputQuote, divQuote], [inputWeather, divWeather], [inputPlayer, divPlayer], [inputTodo, divTodo]]
 
-blocks.forEach((item) => { 
-    item[0].addEventListener ('change', () => {
-        item[1].classList.toggle('hide')
+function hideElements () {
+    blocks.forEach((item) => { 
+        item[0].addEventListener ('change', () => {
+            item[1].classList.toggle('hide')
+        })
     })
-})
+}
+hideElements()
 
 // for (let i = 0; i < formHideElements.length; i++){
 //     formHideElements[i].addEventListener('change', ()=>{
 //         localStorage.setItem(formHideElements[i].name, formHideElements[i].checked)
 //     })
 // }
+
+//ToDo List
+const todoButton = document.querySelector('.todo-button')
+const outDiv = document.querySelector('.out')
+const todoDiv = document.querySelector('.todo')
+const closerTodo = document.querySelector('.closer-todo')
+var todoList = []
+
+todoButton.addEventListener('click', () => {
+    let todoText = document.querySelector('.in').value
+    let temp = {}
+    temp.todo = todoText
+    temp.check = false 
+    let i = todoList.length
+    todoList[i] = temp
+    out()
+    localStorage.setItem('todo', JSON.stringify(todoList))
+})
+
+function out() {
+    const outText = document.querySelector('.out')
+    var out = ''
+    for (let key in todoList){
+        if (todoList[key].check == true){
+            out += `<div><input type="checkbox" id=${key} class="did" checked><span class = "did">${todoList[key].todo}</span> <span class="closersign${key}" id="closersign">&#10006</span></div>`
+        } else {
+            out += `<div><input type="checkbox" id=${key} class="did"><span>${todoList[key].todo}</span> <span id="closersign" class="closersign${key}">&#10006</span></div>`
+        }
+    
+    }
+    outText.innerHTML = out
+}
+
+outDiv.addEventListener('click', (event) => {
+    let clickInput = event.target.id
+    let closerSign = event.target.className
+    todoList.forEach((item, index) => {
+        if (`${index}` === clickInput){
+            item.check = !item.check
+        }
+        if (`closersign${index}` == closerSign){
+            todoList.splice(index,1)
+            
+        }
+        localStorage.setItem('todo', JSON.stringify(todoList))
+    })
+    out()
+})
+
+const callerTodo = document.querySelector('.call-todo')
+
+callerTodo.addEventListener('click', ()=>{
+    todoDiv.classList.add('appear-todo')
+})
+
+closerTodo.addEventListener('click', ()=> {
+    todoDiv.classList.remove('appear-todo')
+})
+
 
 //Local Storage
 function setLocalStorage() {
@@ -455,6 +519,11 @@ function getLocalStorage() {
 
     if(localStorage.getItem('currentApi')) {
         currentApi = localStorage.getItem('currentApi');
+    }
+
+    if(localStorage.getItem('todo')) {
+        todoList = JSON.parse(localStorage.getItem('todo'))
+        out()
     }
 
     if(localStorage.getItem('lang')) {

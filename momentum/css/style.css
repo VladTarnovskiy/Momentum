@@ -452,3 +452,90 @@ body {
     padding: 5px;
   }
 }
+
+.call-todo{
+  position: absolute;
+  bottom: 60px;
+  right: 20px;
+}
+
+.todo{
+  position: absolute;
+  right: -100%;
+  min-width: 200px;
+  height: 400px;
+  background-color: rgba(142, 113, 163, 0.9);
+  border-radius: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.todo.appear-todo{
+  right: 0px;
+}
+
+.input-data{
+  position: sticky;
+  top: 0;
+}
+
+.in{
+  border-radius: 3px;
+  border: 0;
+  padding-left: 5px;
+  background-color:rgb(227, 213, 239);
+}
+
+.in::placeholder{
+  padding-left: 5px;
+}
+
+.todo-button{
+  border-radius: 3px;
+  border: 0;
+  background-color:rgb(227, 213, 239);
+  color: rgba(30, 12, 12, 0.8);
+  transition: all 0.2s ease-in-out;
+}
+
+.todo-button:hover{
+  cursor: pointer;
+  background-color:rgb(200, 176, 222);
+}
+
+.out{
+  color: rgb(178, 202, 214);
+  text-align: left;
+}
+
+.did{
+  text-decoration:line-through;
+}
+
+.call-todo{
+  opacity: 0.8;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.call-todo:hover{
+  opacity: 1;
+}
+
+#closersign:hover{
+  cursor: pointer;
+  color: rgb(52, 37, 53);
+  transition: all 0.2s ease-in-out;
+}
+
+.closer-todo{
+  display: flex;
+  justify-content: end;
+  color: rgb(198, 189, 189);
+  transition: all 0.2s ease-in-out;
+}
+
+.closer-todo:hover{
+  color: white;
+  cursor:pointer;
+}
