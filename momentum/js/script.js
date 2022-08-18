@@ -35,7 +35,8 @@ const greetingTranslation = {
         'm/s': ' m/s',
         'title-api':'Background source:',
         'Tag for API':'Tag for API:',
-        'Hide element':'Hide elements:'
+        'Hide element':'Hide elements:',
+        'todo':'Todo'
     },
     'ru': {
         'morning': 'Доброе утро',
@@ -49,7 +50,8 @@ const greetingTranslation = {
         'm/s': ' м/с',
         'title-api':'Источник фоновых изображений:',
         'Tag for API':'Тэги для поиска:',
-        'Hide element':'Скрыть элементы:'
+        'Hide element':'Скрыть элементы:',
+        'todo':'Cписок дел'
     }
 }
 
@@ -82,6 +84,7 @@ function showGreeting(lang = 'en') {
     titleAPI.textContent = greetingTranslation[lang]['title-api'];
     titleTagAPI.textContent = greetingTranslation[lang]['Tag for API'];
     hideElement.textContent = greetingTranslation[lang]['Hide element'];
+    callerTodo.textContent = greetingTranslation[lang]['todo']
 
     if (lang == 'ru'){
         russian.classList.add('active');
@@ -270,17 +273,16 @@ const butNextAudio = document.querySelector('.play-next')
 const butPrevAudio = document.querySelector('.play-prev')
 const playerList = document.querySelector('.play-list')
 const playerControls = document.querySelector('.player-controls')
+const songName = document.querySelector('.song-name')
 let isPlay = false
 let playNum = 0
 const audio = new Audio();
+audio.src = playList[playNum].src
 
 function playAudio () {
-    audio.src = playList[playNum].src
-    audio.currentTime = 0;
     play.classList.add('pause')
     isPlay = true
     audio.play()
-    
 }
 
 function pauseAudio (){
@@ -299,32 +301,59 @@ play.addEventListener('click', () => {
     }
 })
 
+function changeSongName (x) {
+    songName.textContent = playList[x].title
+}
+
 function playNext (){
+    audio.src = playList[playNum].src
     if (playNum < 3){
         playNum += 1
     } else {
         playNum = 0
     }
+    changeSongName(playNum)
     playAudio()
+    musicMarker()
 }
 butNextAudio.addEventListener('click', playNext)
 audio.addEventListener('ended', playNext)
-// При окончании трека глючит маркер
 
 function playPrev (){
+    audio.src = playList[playNum].src
     if (playNum > 0){
         playNum -= 1
     } else {
         playNum = 3
     }
+    changeSongName (playNum)
     playAudio()
 }
 butPrevAudio.addEventListener('click', playPrev)
+changeSongName (playNum)
+
+function musicMarker () {
+    const li = document.querySelectorAll('.play-item')
+    li.forEach((item, index) => {
+            if (index == playNum){
+                item.classList.add('item-active')
+            } else {
+                item.classList.remove('item-active')
+            }
+    })
+}
 
 playList.forEach((item, index) => {
     const li = document.createElement('li')
+    // const div = document.createElement('li')
+
     li.classList.add('play-item')
     li.textContent = playList[index].title
+    playerList.append(li)
+
+    // div.classList.add('play-list-item')
+    // div.classList.add('play-list-item')
+    // li.prepend(div)
     playerControls.addEventListener('click', () => {
         if (index == playNum){
             li.classList.add('item-active')
@@ -332,10 +361,91 @@ playList.forEach((item, index) => {
             li.classList.remove('item-active')
         }
     })
-    
-    playerList.append(li)
 })
 
+// const playListItem = document.querySelectorAll('.play-list-item')
+// playListItem.forEach((item, index) => {
+//     item.addEventListener('click', (e) => {
+//         if (!item.classList.contains('pause')){
+//             item.classList.add('pause')
+//             isPlay = true
+//             audio.src = playList[index].src
+//             audio.play()
+//             playAudio()
+//         } else {
+//                 item.classList.remove('pause')
+//                 isPlay = false
+//                 audio.pause();
+//         }
+//         if(e.target !== item){
+//             item.classList.remove('pause')
+//         }
+//         // item.classList.toggle('pause')
+//     })
+// })
+
+
+
+//prefer Player
+const audioPlayer = document.querySelector('.player')
+audio.addEventListener('loadeddata',() => {
+    let musicTimer = document.querySelector('.length')
+      musicTimer.textContent = getTimeCodeFromNum(
+        audio.duration
+      )
+      audio.volume = .75
+    },
+    false
+  );
+
+function getTimeCodeFromNum(num) {
+    let seconds = parseInt(num);
+    let minutes = parseInt(seconds / 60);
+    seconds -= minutes * 60;
+    const hours = parseInt(minutes / 60);
+    minutes -= hours * 60;
+
+    if (hours === 0) return `${minutes}:${String(seconds % 60).padStart(2, 0)}`;
+    return `${String(hours).padStart(2, 0)}:${minutes}:${String(
+        seconds % 60
+    ).padStart(2, 0)}`;
+}
+
+const timeline = audioPlayer.querySelector(".timeline");
+    timeline.addEventListener("click", e => {
+        const timelineWidth = window.getComputedStyle(timeline).width;
+        const timeToSeek = e.offsetX / parseInt(timelineWidth) * audio.duration;
+        audio.currentTime = timeToSeek;
+}, false);
+
+const volumeSlider = document.querySelector('.volume-slider')
+volumeSlider.addEventListener('click', e => {
+  const sliderWidth = window.getComputedStyle(volumeSlider).width;
+  const newVolume = e.offsetX / parseInt(sliderWidth);
+  audio.volume = newVolume;
+  document.querySelector('.volume-percentage').style.width = newVolume * 100 + '%';
+}, false)
+
+setInterval(() => {
+    const progressBar = document.querySelector(".progress");
+    progressBar.style.width = audio.currentTime / audio.duration * 100 + "%";
+    const currentTimer = document.querySelector(".current");
+    currentTimer.textContent = getTimeCodeFromNum(
+    audio.currentTime
+);
+}, 500);
+
+document.querySelector('.volume-button').addEventListener("click", () => {
+    const volumeEl = document.querySelector('.volume');
+    audio.muted = !audio.muted;
+    if (audio.muted) {
+      volumeEl.classList.remove("icono-volumeMedium");
+      volumeEl.classList.add("icono-volumeMute");
+    } else {
+      volumeEl.classList.add("icono-volumeMedium");
+      volumeEl.classList.remove("icono-volumeMute");
+    }
+  });
 //Settings
 const closer = document.querySelector('.closer-svg')
 const setting = document.querySelector('.setting')
@@ -442,7 +552,7 @@ hideElements()
 const todoButton = document.querySelector('.todo-button')
 const outDiv = document.querySelector('.out')
 const todoDiv = document.querySelector('.todo')
-const closerTodo = document.querySelector('.closer-todo')
+const closerTodo = document.querySelector('.icono-cross')
 var todoList = []
 
 todoButton.addEventListener('click', () => {

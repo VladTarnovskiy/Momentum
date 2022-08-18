@@ -6,16 +6,35 @@
   <link href="assets/favicon.ico" rel="shortcut icon" />
   <link rel="stylesheet" href="css/owfont-regular.css" />
   <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/icono.min.css">
   <title>momentum</title>
 </head>
 <body>
   <header class="header">
     <div class="player">
-      <div class="player-controls">
-        <button class="play-prev player-icon"></button>
-        <button class="play player-icon"></button>
-        <button class="play-next player-icon"></button>
+      <div class="song-name">Music Song</div>
+        <div class="player-controls">
+          <button class="play-prev player-icon"></button>
+          <button class="play player-icon"></button>
+          <button class="play-next player-icon"></button>
+        <div class="audio-time">
+          <div class="current">0:00</div>
+          <div class="divider">/</div>
+          <div class="length">0:39</div>
+          <div class="volume-container">
+            <div class="volume-button">
+              <div class="volume icono-volumeMedium"></div>
+            </div>
+            <div class="volume-slider">
+              <div class="volume-percentage"></div>
+            </div>
+          </div>
+        </div>
       </div>
+      <div class="timeline">
+        <div class="progress"></div>
+      </div>
+      
       <ul class="play-list"></ul>
     </div>
     <div class="setting-svg-wrap"></div>
@@ -84,7 +103,7 @@
     <date class="date"></date>
     <div class="greeting-container">
       <span class="greeting"></span>
-      <input type="text" class="name" value="" placeholder="[Enter Name]"/>
+      <input type="text" class="name" value="" placeholder="[Enter Name]">
     </div>
   </main>
   <footer class="footer">
@@ -95,8 +114,9 @@
     </div>
     <div class="call-todo">Todo</div>
     <div class="todo">
-      <div class="closer-todo">
-        &#9746
+      <div class="closer-wrap">
+        <div class="icono-cross closer-todo">
+        </div>
       </div>
       <div class="input-data">
         <input type="text" class="in" placeholder="Write your task">
