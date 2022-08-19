@@ -201,7 +201,7 @@ async function getWeather (lang = 'en') {
     try{
         const res = await fetch(url)
         const data = await res.json()
-
+        weatherIcon.style.display = 'block'
         weatherIcon.className = 'weather-icon owf';
         weatherIcon.classList.add(`owf-${data.weather[0].id}`);
         temperature.textContent = `${Math.round(data.main.temp)}°C`;
@@ -209,7 +209,11 @@ async function getWeather (lang = 'en') {
         wind.textContent = `${greetingTranslation[lang]['wind speed']}${Math.round(data.wind.speed)}${greetingTranslation[lang]['m/s']}`;
         humidity.textContent = `${greetingTranslation[lang]['humidity']}${Math.round(data.main.humidity)}%`;
     } catch(err) {
-        alert('The city doesnt exist!')
+        weatherIcon.style.display = 'none'
+        temperature.textContent = "City doesn't exist!"
+        weatherDescription.textContent = ''
+        wind.textContent = ''
+        humidity.textContent = ''
     }
 }
 
@@ -280,14 +284,17 @@ const audio = new Audio();
 audio.src = playList[playNum].src
 
 function playAudio () {
+    
+    musicMarker ()
     play.classList.add('pause')
     isPlay = true
     audio.play()
 }
 
 function pauseAudio (){
-    if (isPlay == true){
+    if (isPlay = true) {
         play.classList.remove('pause')
+        playListItem.forEach(e => e.classList.remove('item-active'))
         isPlay = false
         audio.pause();
     }
@@ -301,17 +308,17 @@ play.addEventListener('click', () => {
     }
 })
 
-function changeSongName (x) {
-    songName.textContent = playList[x].title
+function changeSongName () {
+    songName.textContent = playList[playNum].title
 }
 
 function playNext (){
-    audio.src = playList[playNum].src
     if (playNum < 3){
         playNum += 1
     } else {
         playNum = 0
     }
+    audio.src = playList[playNum].src
     changeSongName(playNum)
     playAudio()
     musicMarker()
@@ -320,14 +327,15 @@ butNextAudio.addEventListener('click', playNext)
 audio.addEventListener('ended', playNext)
 
 function playPrev (){
-    audio.src = playList[playNum].src
     if (playNum > 0){
         playNum -= 1
     } else {
         playNum = 3
     }
+    audio.src = playList[playNum].src
     changeSongName (playNum)
     playAudio()
+    musicMarker ()
 }
 butPrevAudio.addEventListener('click', playPrev)
 changeSongName (playNum)
@@ -345,46 +353,24 @@ function musicMarker () {
 
 playList.forEach((item, index) => {
     const li = document.createElement('li')
-    // const div = document.createElement('li')
-
     li.classList.add('play-item')
     li.textContent = playList[index].title
     playerList.append(li)
+})
 
-    // div.classList.add('play-list-item')
-    // div.classList.add('play-list-item')
-    // li.prepend(div)
-    playerControls.addEventListener('click', () => {
-        if (index == playNum){
-            li.classList.add('item-active')
+const playListItem = document.querySelectorAll('.play-item')
+playListItem.forEach((item, index) => {
+    item.addEventListener('click', (e) => {
+        playNum = index
+        if (!e.target.classList.contains('item-active')){
+            audio.src = playList[playNum].src
+            playAudio()
+            changeSongName ()
         } else {
-            li.classList.remove('item-active')
+            pauseAudio()
         }
     })
 })
-
-// const playListItem = document.querySelectorAll('.play-list-item')
-// playListItem.forEach((item, index) => {
-//     item.addEventListener('click', (e) => {
-//         if (!item.classList.contains('pause')){
-//             item.classList.add('pause')
-//             isPlay = true
-//             audio.src = playList[index].src
-//             audio.play()
-//             playAudio()
-//         } else {
-//                 item.classList.remove('pause')
-//                 isPlay = false
-//                 audio.pause();
-//         }
-//         if(e.target !== item){
-//             item.classList.remove('pause')
-//         }
-//         // item.classList.toggle('pause')
-//     })
-// })
-
-
 
 //prefer Player
 const audioPlayer = document.querySelector('.player')

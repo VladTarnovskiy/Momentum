@@ -49,6 +49,11 @@ body {
 
 }
 
+.player{
+  position: relative;
+  z-index: 10;
+}
+
 .player-controls {
   display: flex;
   align-items: center;
@@ -77,7 +82,7 @@ body {
 .play-item {
   position: relative;
   padding: 5px;
-  padding-left: 20px;
+  padding-left: 25px;
   list-style: none;
   opacity: .8;
   cursor: pointer;
@@ -88,16 +93,25 @@ body {
   opacity: 1;
 }
 
+.play-item.item-active{
+  background-color: coral;
+}
+
 .play-item::before {
-  content: "\2713";  
+  background-image: url(../assets/svg/play.svg);
+  background-size: contain;
+ background-repeat: no-repeat;
+  width: 20px;
+  height: 20px;
+  content: " ";  
   position: absolute;
   left: 0;
-  top: 2px;
+  top: 4px;
   font-weight: 900;
 }
 
 .item-active::before {
-  color: #C5B358;
+  background-image: url(../assets/svg/pause.svg);
 }
 
 .player-icon,
@@ -373,6 +387,7 @@ body {
 
 .weather-icon {
   font-size: 44px;
+  transition: all 0.2s ease-in;
 }
 
 .city {
