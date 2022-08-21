@@ -517,24 +517,36 @@ const inputPlayer = document.querySelector('#audio')
 const inputTodo = document.querySelector('#todoDiv')
 const formHideElements = document.querySelector('.form-hide-elements').elements
 
-const blocks = [[inputTime, divTime], [inputDate, divDate], [inputGreeting, divGreeting], [inputQuote, divQuote], [inputWeather, divWeather], [inputPlayer, divPlayer], [inputTodo, divTodo]]
+let stime = true
+let sdate = true
+let sgreeting = true
+let squote = true
+let sweather = true
+let splayer = true
+let stodo = true
+
+const blocks = [[inputTime, divTime, stime], [inputDate, divDate, sdate], [inputGreeting, divGreeting, sgreeting], [inputQuote, divQuote, squote], [inputWeather, divWeather, sweather], [inputPlayer, divPlayer, splayer], [inputTodo, divTodo, stodo]]
+
+
+
 
 function hideElements () {
-    blocks.forEach((item) => { 
+    blocks.forEach((item, index) => { 
         item[0].addEventListener ('change', () => {
-            item[1].classList.toggle('hide')
+            if (item[0].checked){
+                item[1].classList.add('hide')
+                item[2] = false
+            } else {
+                item[1].classList.remove('hide')
+                item[2] = true
+            }
+            localStorage.setItem(`block${index}`, item[2]);
         })
     })
 }
 hideElements()
 
-// for (let i = 0; i < formHideElements.length; i++){
-//     formHideElements[i].addEventListener('change', ()=>{
-//         localStorage.setItem(formHideElements[i].name, formHideElements[i].checked)
-//     })
-// }
-
-//ToDo List
+// ToDo List
 const todoButton = document.querySelector('.todo-button')
 const outDiv = document.querySelector('.out')
 const todoDiv = document.querySelector('.todo')
@@ -631,13 +643,18 @@ function getLocalStorage() {
     } else {    
         showGreeting()
     }
-    // for (let i = 0; i < formHideElements.length; i++){
-    //     formHideElements[i].checked = localStorage.getItem(formHideElements[i].name) === 'true' ? true : false;
-    // }
-
    
     setBg(api)
     changeApiMarker(api)
+
+    blocks.forEach((item, index) => { 
+            if (localStorage.getItem(`block${index}`) === 'false'){
+                item[1].classList.add('hide')
+                item[0].checked = 'checked'
+            } else {
+                item[1].classList.remove('hide')
+            }
+    })
 }
 
 window.addEventListener('load', getLocalStorage)
