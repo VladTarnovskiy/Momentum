@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="assets/favicon.ico" rel="shortcut icon" />
+  <link rel="stylesheet" href="css/owfont-regular.css" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/icono.min.css">
+  <title>momentum</title>
+</head>
+<body>
+  <header class="header">
+    <div class="player">
+      <div class="song-name">Music Song</div>
+        <div class="player-controls">
+          <button class="play-prev player-icon"></button>
+          <button class="play player-icon"></button>
+          <button class="play-next player-icon"></button>
+        <div class="audio-time">
+          <div class="current">0:00</div>
+          <div class="divider">/</div>
+          <div class="length">0:39</div>
+          <div class="volume-container">
+            <div class="volume-button">
+              <div class="volume icono-volumeMedium"></div>
+            </div>
+            <div class="volume-slider">
+              <div class="volume-percentage"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="timeline">
+        <div class="progress"></div>
+      </div>
+      
+      <ul class="play-list"></ul>
+    </div>
+    <div class="setting-svg-wrap"></div>
+    <div class="setting">
+      <div class="closer">
+        <button class="closer-svg"></button>
+      </div>
+      <div class="lang">
+        <a href="#!" class="header_lang english">EN</a>
+        <span>/</span>
+        <a href="#!" class="header_lang russian">RU</a>
+      </div>
+      <div class="background-source">
+        <div class="title-api">Background source:</div>
+        <div class="api-item github">GitHub</div>
+        <div class="api-item unsplash">Unsplash API</div>
+        <div class="api-item flickr">Flickr API</div>
+      </div>
+      <div class="tag-for-api">
+        <div class="title-tag-api">Tag for API:</div>
+        <form action="#">
+          <label for="animal">Animal</label>
+          <input type="radio" name="tagname" value="animal" id="animal">
+          <label for="people">People</label>
+          <input type="radio" name="tagname" value="people" id="people">
+        </form>
+      </div>
+      <div class="hide-element-wrap">
+        <div class="title-hide-element">Hide elements:</div>
+        <form class='form-hide-elements' action="#">
+          <label for="time">Time</label>
+          <input type="checkbox" name="time" value="time" id="time">
+          <label for="date">Date</label>
+          <input type="checkbox" name="date" value="date" id="date">
+          <label for="greeting">Greeting</label>
+          <input type="checkbox" name="greeting" value="greeting" id="greeting">
+          <label for="quote">Quote</label>
+          <input type="checkbox" name="quote" value="quote" id="quote">
+          <label for="weather">Weather</label>
+          <input type="checkbox" name="weather" value="weather" id="weather">
+          <label for="audio">Audio</label>
+          <input type="checkbox" name="audio" value="audio" id="audio">
+          <label for="todoDiv">Todo</label>
+          <input type="checkbox" name="todoDiv" value="todoDiv" id="todoDiv">
+        </form>
+      </div>
+    </div>
+    <div class="weather">
+      <input type="text" class="city" value="Minsk"/>
+      <i class="weather-icon owf"></i>
+      <div class="weather-error"></div>
+      <div class="description-container">
+        <span class="temperature"></span>
+        <span class="weather-description"></span>
+      </div>
+      <div class="wind"></div>
+      <div class="humidity"></div>
+    </div>
+  </header>
+  <main class="main">
+    <div class="slider-icons">
+      <button class="slide-prev slider-icon"></button>
+      <button class="slide-next slider-icon"></button>
+    </div>
+    <time class="time"></time>
+    <date class="date"></date>
+    <div class="greeting-container">
+      <span class="greeting"></span>
+      <input type="text" class="name" value="" placeholder="[Enter Name]">
+    </div>
+  </main>
+  <footer class="footer">
+    <button class="change-quote"></button>
+    <div>
+      <div class="quote"></div>
+      <div class="author"></div>
+    </div>
+    <div class="call-todo">Todo</div>
+    <div class="todo">
+      <div class="closer-wrap">
+        <div class="icono-cross closer-todo">
+        </div>
+      </div>
+      <div class="input-data">
+        <input type="text" class="in" placeholder="Write your task">
+      <button class="todo-button">Add</button>
+      </div>
+      <div class="out"></div>
+    </div>
+  </footer>
+  <script type="module" src="js/script.js"></script>
+</body>
+</html>
