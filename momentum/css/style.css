@@ -1,7 +1,7 @@
 @font-face {
-  font-family: 'Arial-MT';
+  font-family: "Arial-MT";
   src: url("../assets/fonts/Arial-MT.woff"); /* Путь к файлу со шрифтом */
- }
+}
 
 * {
   box-sizing: border-box;
@@ -13,7 +13,7 @@
 body {
   min-width: 320px;
   min-height: 100vh;
-  font-family: 'Arial', sans-serif;
+  font-family: "Arial", sans-serif;
   font-size: 16px;
   color: #fff;
   text-align: center;
@@ -24,7 +24,7 @@ body {
   transition: background-image 1s ease-in-out;
 }
 
-.setting input:hover{
+.setting input:hover {
   cursor: pointer;
 }
 
@@ -34,22 +34,21 @@ body {
   align-items: flex-start;
   width: 100%;
   height: 30vh;
-  min-height: 220px;  
+  min-height: 220px;
   padding: 20px;
   padding-top: 40px;
 }
 
-@media (max-width: 500px){
-	.header {
-   flex-direction: column;
-   align-items: center;
-   height: 100%;
-   margin-top: 20px;
+@media (max-width: 500px) {
+  .header {
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    margin-top: 20px;
   }
-
 }
 
-.player{
+.player {
   position: relative;
   z-index: 10;
 }
@@ -62,16 +61,16 @@ body {
   margin-bottom: 5px;
 }
 
-.player-icon{
+.player-icon {
   margin-right: 5px;
 }
 
-.audio-time{
+.audio-time {
   display: flex;
   align-items: center;
 }
 
-.audio-time div{
+.audio-time div {
   margin-right: 3px;
 }
 
@@ -84,26 +83,26 @@ body {
   padding: 5px;
   padding-left: 25px;
   list-style: none;
-  opacity: .8;
+  opacity: 0.8;
   cursor: pointer;
-  transition: .3s;
+  transition: 0.3s;
 }
 
 .play-item:hover {
   opacity: 1;
 }
 
-.play-item.item-active{
+.play-item.item-active {
   background-color: coral;
 }
 
 .play-item::before {
   background-image: url(../assets/svg/play.svg);
   background-size: contain;
- background-repeat: no-repeat;
+  background-repeat: no-repeat;
   width: 20px;
   height: 20px;
-  content: " ";  
+  content: " ";
   position: absolute;
   left: 0;
   top: 4px;
@@ -125,9 +124,9 @@ body {
   background-color: transparent;
   border: 0;
   outline: 0;
-  opacity: .8;
+  opacity: 0.8;
   cursor: pointer;
-  transition: .3s;  
+  transition: 0.3s;
 }
 
 .player-icon:hover,
@@ -140,11 +139,11 @@ body {
 .slider-icon:active,
 .change-quote:active {
   border: 0;
-  outline: 0;  
+  outline: 0;
   transform: scale(1.1);
 }
 
-.song-name{
+.song-name {
   text-align: left;
   margin-bottom: 3px;
 }
@@ -156,7 +155,7 @@ body {
   background-image: url("../assets/svg/play.svg");
 }
 
-.play-list-item{
+.play-list-item {
   display: inline-block;
   width: 20px;
   height: 20px;
@@ -209,7 +208,7 @@ body {
   z-index: 2;
   margin-left: 3px;
 }
-      
+
 .volume-slider {
   position: absolute;
   left: -3px;
@@ -220,27 +219,26 @@ body {
   background: white;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.6666666667);
   transition: 0.25s;
-}     
-      
+}
+
 .volume-percentage {
   background: coral;
   height: 100%;
   width: 75%;
   transition: all 0.25s;
 }
-      
+
 .volume-container:hover .volume-slider {
   left: -123px;
   width: 120px;
 }
-  
 
 /* Settings */
-.setting{
+.setting {
   position: absolute;
-  left:50%;
-  transform:translate(-50%, 0);
-  top:-500px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  top: -500px;
   width: 300px;
   height: 500px;
   background-color: black;
@@ -249,16 +247,16 @@ body {
   transition: all 1s ease-in-out;
 }
 
-.setting.center{
+.setting.center {
   top: 0;
 }
 
-.closer{
+.closer {
   display: flex;
   justify-content: end;
 }
 
-.closer-svg{
+.closer-svg {
   display: block;
   width: 32px;
   height: 32px;
@@ -272,12 +270,13 @@ body {
   margin-top: 5px;
   margin-right: 5px;
   opacity: 0.8;
+  border: none;
 }
 
-.setting-svg-wrap{
-  left:50%;
-  transform:translate(-50%, 0);
-  top:20px;
+.setting-svg-wrap {
+  left: 50%;
+  transform: translate(-50%, 0);
+  top: 20px;
   display: block;
   position: absolute;
   width: 32px;
@@ -294,19 +293,18 @@ body {
   opacity: 0.8;
 }
 
-@media (max-width: 500px){
-  .setting-svg-wrap{
-    left:60px;
-    
+@media (max-width: 500px) {
+  .setting-svg-wrap {
+    left: 60px;
   }
 }
 
 .closer-svg:hover,
-.setting-svg-wrap:hover{
+.setting-svg-wrap:hover {
   opacity: 1;
 }
 
-.header_lang{
+.header_lang {
   font-size: 20px;
   line-height: 50px;
   text-decoration: none;
@@ -320,40 +318,40 @@ body {
 }
 
 .header_lang:hover,
-.active, .api-item:hover{
+.active,
+.api-item:hover {
   opacity: 1;
 }
 
-.api{
+.api {
   display: flex;
   flex-direction: column;
 }
 
-.title-api{
+.title-api {
   font-size: 20px;
 }
 
 .title-tag-api,
-.title-hide-element{
+.title-hide-element {
   padding-top: 8px;
   font-size: 20px;
 }
 
-.hide{
+.hide {
   visibility: hidden;
   opacity: 0;
 }
 
-.api-item{
+.api-item {
   color: white;
   opacity: 0.8;
   cursor: pointer;
 }
 
-.api-item.active{
+.api-item.active {
   opacity: 1;
 }
-
 
 .weather {
   display: flex;
@@ -362,16 +360,15 @@ body {
   align-items: flex-start;
   row-gap: 5px;
   width: 180px;
-  min-height: 180px;  
+  min-height: 180px;
   text-align: left;
 }
 
-@media (max-width: 500px){
-	.weather {
-   margin-top: 20px;
+@media (max-width: 500px) {
+  .weather {
+    margin-top: 20px;
   }
 }
-
 
 .weather-error {
   margin-top: -10px;
@@ -396,17 +393,17 @@ body {
   padding: 5px;
   font-size: 20px;
   line-height: 24px;
-  color: #fff;  
+  color: #fff;
   border: 0;
   outline: 0;
   border-bottom: 1px solid #fff;
   background-color: transparent;
 }
 
-.city::placeholder {  
+.city::placeholder {
   font-size: 20px;
   color: #fff;
-  opacity: .6;
+  opacity: 0.6;
 }
 
 .main {
@@ -417,11 +414,11 @@ body {
   align-items: center;
   width: 100%;
   height: 40vh;
-  min-height: 260px;  
+  min-height: 260px;
   padding: 20px;
 }
 
-@media (max-width: 500px){
+@media (max-width: 500px) {
   .main {
     height: 20vh;
   }
@@ -447,10 +444,10 @@ body {
 .time {
   min-height: 124px;
   margin-bottom: 10px;
-  font-family: 'Arial-MT';
+  font-family: "Arial-MT";
   font-size: 100px;
   letter-spacing: -4px;
-  transition: all 1s ease-in-out;  
+  transition: all 1s ease-in-out;
 }
 
 .date {
@@ -470,7 +467,7 @@ body {
 }
 
 .greeting {
-  flex: 1;  
+  flex: 1;
   padding: 10px;
   text-align: right;
 }
@@ -489,7 +486,7 @@ body {
 
 .name::placeholder {
   color: #fff;
-  opacity: .6;
+  opacity: 0.6;
 }
 
 .footer {
@@ -499,13 +496,13 @@ body {
   align-items: center;
   width: 100%;
   height: 30vh;
-  min-height: 160px;  
+  min-height: 160px;
   padding: 20px;
 }
 
 .change-quote {
   margin-bottom: 30px;
-  background-image: url("../assets/svg/reload.svg");  
+  background-image: url("../assets/svg/reload.svg");
 }
 
 .quote {
@@ -519,7 +516,7 @@ body {
 @media (max-width: 768px) {
   .time {
     min-height: 80px;
-    font-size: 72px;    
+    font-size: 72px;
   }
 
   .greeting-container {
@@ -540,9 +537,9 @@ body {
 @media (max-width: 500px) {
   .time {
     min-height: 40px;
-    font-size: 40px;    
+    font-size: 40px;
   }
-  
+
   .date {
     min-height: 14px;
     font-size: 14px;
@@ -560,7 +557,7 @@ body {
   }
 }
 
-.todo{
+.todo {
   position: absolute;
   visibility: hidden;
   opacity: 0;
@@ -573,50 +570,50 @@ body {
   padding-right: 5px;
 }
 
-.todo.appear-todo{
-  visibility:visible;
+.todo.appear-todo {
+  visibility: visible;
   opacity: 0.9;
 }
 
-.input-data{
+.input-data {
   position: sticky;
   top: 0;
 }
 
-.in{
+.in {
   border-radius: 3px;
   border: 0;
   padding-left: 5px;
-  background-color:rgb(227, 213, 239);
+  background-color: rgb(227, 213, 239);
 }
 
-.in::placeholder{
+.in::placeholder {
   padding-left: 5px;
 }
 
-.todo-button{
+.todo-button {
   border-radius: 3px;
   border: 0;
-  background-color:rgb(227, 213, 239);
+  background-color: rgb(227, 213, 239);
   color: rgba(30, 12, 12, 0.8);
   transition: all 0.2s ease-in-out;
 }
 
-.todo-button:hover{
+.todo-button:hover {
   cursor: pointer;
-  background-color:rgb(200, 176, 222);
+  background-color: rgb(200, 176, 222);
 }
 
-.out{
+.out {
   color: rgb(178, 202, 214);
   text-align: left;
 }
 
-.did{
-  text-decoration:line-through;
+.did {
+  text-decoration: line-through;
 }
 
-.call-todo{
+.call-todo {
   opacity: 0.8;
   transition: all 0.2s ease-in-out;
   cursor: pointer;
@@ -626,28 +623,28 @@ body {
   right: 20px;
 }
 
-.call-todo:hover{
+.call-todo:hover {
   opacity: 1;
 }
 
-#closersign:hover{
+#closersign:hover {
   cursor: pointer;
   color: rgb(52, 37, 53);
   transition: all 0.2s ease-in-out;
 }
 
-.closer-wrap{
+.closer-wrap {
   display: flex;
   justify-content: end;
 }
 
-.icono-cross.closer-todo{
+.icono-cross.closer-todo {
   width: 20px;
   color: rgb(198, 189, 189);
   transition: all 0.2s ease-in-out;
 }
 
-.icono-cross:hover{
+.icono-cross:hover {
   color: white;
-  cursor:pointer;
+  cursor: pointer;
 }
